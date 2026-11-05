@@ -5,6 +5,7 @@ interface UserSchemaTypes {
   userId: string;
   avatarImageURL?: string;
   username: string;
+  email: string;
   displayName: string;
   dateOfBirth: Date;
   phoneNumber?: number;
@@ -27,6 +28,12 @@ const userSchema = new mongoose.Schema<UserSchemaTypes>({
     required: false,
   },
   username: {
+    type: String,
+    required: true,
+    trim: true,
+    lowercase: true,
+  },
+  email: {
     type: String,
     required: true,
     trim: true,

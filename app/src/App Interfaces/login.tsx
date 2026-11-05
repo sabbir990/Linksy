@@ -1,6 +1,7 @@
 import LinksyLogo from "../Assets/Linksy_logo.png";
 import Image from 'next/image';
 import LoginForm from '../Components/loginForm';
+import Link from "next/link";
 
 
 export default function Login() {
@@ -14,6 +15,9 @@ export default function Login() {
       </div>
       <div>
         <LoginForm />
+      </div>
+      <div className="text-center">
+        New to Linksy? <Link href={'/register'} className="font-semibold text-blue-500 cursor-pointer underline">Create an account</Link>
       </div>
     </div>
   )
