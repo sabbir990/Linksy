@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChatContext, ChatContextType } from "./chatContext";
 import { ChatBarPropTypes } from "../Components/chatList";
+import { UserSchemaTypes } from "../Models/Users";
 
 const chatData: ChatBarPropTypes[] = [
     {
@@ -53,7 +54,9 @@ const chatData: ChatBarPropTypes[] = [
 const ChatContextProvider = ({ children, }: { children: React.ReactNode }) => {
     const [currentlySelectedChat, useCurrentlySelectedChat] = useState<ChatBarPropTypes | null>(null);
     const [isChatChoosen, setIsChatChoosen] = useState<boolean>(false);
+    const [user, setUser] = useState<UserSchemaTypes | null>(null);
 
+    console.log(user)
 
     // Function 1: Selecting chat.
 
@@ -91,7 +94,9 @@ const ChatContextProvider = ({ children, }: { children: React.ReactNode }) => {
         chatData,
         selectChat,
         loadChat,
-        isChatChoosen
+        isChatChoosen,
+        user,
+        setUser
     }
 
     return (

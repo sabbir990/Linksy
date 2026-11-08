@@ -1,7 +1,7 @@
 
 import mongoose from "mongoose";
 
-interface UserSchemaTypes {
+export interface UserSchemaTypes {
   userId: string;
   avatarImageURL?: string;
   username: string;

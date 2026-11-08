@@ -1,17 +1,21 @@
 "use client"
 
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Chats from "./src/App Interfaces/chats";
 import Login from "./src/App Interfaces/login";
 import ChatContextProvider from "./src/Context API/contextProvider";
+import { ChatContext } from "./src/Context API/chatContext";
 
 export default function Home() {
-  const [loggedIn, setLoggedIn] = useState<boolean>(false)
+  const chatAppContext = useContext(ChatContext);
+  const user = chatAppContext?.user;
+
+  console.log(user);
   return (
     <ChatContextProvider>
       <main className="font-[family-name:var(--font-plus-jakarta-sans)]">
 
-        {loggedIn ? <Chats /> : <Login />}
+        {user ? <Chats /> : <Login />}
       </main>
     </ChatContextProvider>
   );

@@ -1,12 +1,20 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
 import RegisterForm from '../src/Components/registerForm'
 import LinksyLogo from "../src/Assets/Linksy_logo.png"
 
 export default function RegisterPage() {
     return (
-        <div className='flex flex-col items-center h-screen justify-center space-y-4 font-[family-name:var(--font-plus-jakarta-sans)]'>
+        <div className="flex
+  min-h-screen
+  flex-col
+  items-center
+  justify-center
+  space-y-4
+  py-8
+  px-4
+  font-[family-name:var(--font-plus-jakarta-sans)]
+">
             {/* Top Part */}
             <div className='flex flex-col items-center space-y-2'>
                 <Image src={LinksyLogo} width={150} height={100} alt='Linksy logo'></Image>
@@ -17,7 +25,7 @@ export default function RegisterPage() {
                 <RegisterForm />
             </div>
             <div className="text-center">
-                New to Linksy? <Link href={'/register'} className="font-semibold text-blue-500 cursor-pointer underline">Create an account</Link>
+                Already have an account? <Link href={'/'} className="font-semibold text-blue-500 cursor-pointer underline">Sign In</Link>
             </div>
         </div>
     )
