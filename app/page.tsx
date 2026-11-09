@@ -10,7 +10,6 @@ export default function Home() {
   const chatAppContext = useContext(ChatContext);
   const user = chatAppContext?.user;
 
-  console.log(user);
   return (
     <ChatContextProvider>
       <main className="font-[family-name:var(--font-plus-jakarta-sans)]">

@@ -56,7 +56,7 @@ const ChatContextProvider = ({ children, }: { children: React.ReactNode }) => {
     const [isChatChoosen, setIsChatChoosen] = useState<boolean>(false);
     const [user, setUser] = useState<UserSchemaTypes | null>(null);
 
-    console.log(user)
+    // console.log(user)
 
     // Function 1: Selecting chat.
 
