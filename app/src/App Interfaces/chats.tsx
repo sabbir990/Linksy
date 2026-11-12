@@ -1,12 +1,12 @@
 import Sidebar from '../Components/sidebar'
 import NoChatChoosen from '../Components/noChatChoosen';
-import { useContext } from 'react';
-import { ChatContext } from '../Context API/chatContext';
+import { useContext, useState } from 'react';
+// import { ChatContext } from '../Context API/chatContext';
 import Conversation from '../Components/conversation';
 
 export default function Chats() {
 
-  const contextAPI = useContext(ChatContext)
+  const [isChatSeleted, setIsChatSelected] = useState<boolean>(false);
 
   return (
     <div className="flex h-screen w-full overflow-hidden">
@@ -18,7 +18,7 @@ export default function Chats() {
 
       {/* Conversation */}
       <div className="flex-3 min-w-0 min-h-0">
-        {contextAPI?.isChatChoosen
+        {isChatSeleted
           ? <Conversation />
           : <NoChatChoosen />
         }

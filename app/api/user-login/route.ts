@@ -9,9 +9,7 @@ import { cookies } from "next/headers";
 
 export const PATCH = async (req: NextRequest, res: NextResponse) => {
     try {
-
-        await main();
-
+        
         const { email, password } = await req.json();
         const userExists = await UserModel.findOne({ email });
 

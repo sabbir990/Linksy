@@ -7,7 +7,6 @@ import { sendRegisterOTP } from "@/app/Email Templates/otpTemplates";
 
 export const POST = async (req: NextRequest) => {
     try {
-        await main();
         const { email } = await req.json();
         console.log(email)
         const otp = Number(generateOTP());

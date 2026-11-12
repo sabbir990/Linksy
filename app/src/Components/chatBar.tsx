@@ -1,7 +1,7 @@
 import { FaRegUser } from "react-icons/fa";
 import { ChatBarPropTypes } from "./chatList";
-import { useContext } from "react";
-import { ChatContext } from "../Context API/chatContext";
+// import { useContext } from "react";
+// import { ChatContext } from "../Context API/chatContext";
 
 interface ChatBarProps{
     chat: ChatBarPropTypes
@@ -16,22 +16,20 @@ export default function ChatBar({ chat }: ChatBarProps) {
     isSelected
   } = chat;
 
-  const contextAPI = useContext(ChatContext);
+  // const handleChatSelection = () => {
+  //   if(!chat.id){
+  //       throw new Error("Your chat selection request cannot be completed. No chat found for it!");
+  //   }
 
-  const handleChatSelection = () => {
-    if(!chat.id){
-        throw new Error("Your chat selection request cannot be completed. No chat found for it!");
-    }
+  //   if(!contextAPI){
+  //       throw new Error("Chat context cannot possibly be null!")
+  //   }
 
-    if(!contextAPI){
-        throw new Error("Chat context cannot possibly be null!")
-    }
-
-    contextAPI.selectChat(chat.id);
-  }
+  //   contextAPI.selectChat(chat.id);
+  // }
 
   return (
-    <div className={`flex w-full items-center space-x-3 rounded-lg bg-gray-100 p-3 cursor-pointer ${isSelected ? "bg-indigo-200" : ""}`} onClick={handleChatSelection}>
+    <div className={`flex w-full items-center space-x-3 rounded-lg bg-gray-100 p-3 cursor-pointer ${isSelected ? "bg-indigo-200" : ""}`}>
       {/* Profile icon */}
       <div className={`relative w-fit shrink-0 rounded-full ${isSelected ? "border-2 border-white" : "border-2 border-gray-300"} p-3`}>
         <FaRegUser size={18} color={`${isSelected ? "#ffffff": "#a6a4ab"}`} />

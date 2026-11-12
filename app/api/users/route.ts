@@ -1,11 +1,8 @@
-import main from "@/app/src/lib/mongooseConnection";
 import UserModel from "@/app/src/Models/Users";
 import { NextResponse, NextRequest } from "next/server";
 
 export async function GET() {
   try {
-    await main();
-
     const users = await UserModel.find().select("-password").lean();
 
     return NextResponse.json({

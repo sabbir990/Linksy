@@ -54,7 +54,6 @@ const chatData: ChatBarPropTypes[] = [
 const ChatContextProvider = ({ children, }: { children: React.ReactNode }) => {
     const [currentlySelectedChat, useCurrentlySelectedChat] = useState<ChatBarPropTypes | null>(null);
     const [isChatChoosen, setIsChatChoosen] = useState<boolean>(false);
-    const [user, setUser] = useState<UserSchemaTypes | null>(null);
 
     // console.log(user)
 
@@ -95,8 +94,6 @@ const ChatContextProvider = ({ children, }: { children: React.ReactNode }) => {
         selectChat,
         loadChat,
         isChatChoosen,
-        user,
-        setUser
     }
 
     return (

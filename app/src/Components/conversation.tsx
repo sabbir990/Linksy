@@ -1,19 +1,16 @@
 
-import React, { useContext } from 'react'
+import React from 'react';
 import { FaRegUser } from "react-icons/fa";
-import { ChatContext } from '../Context API/chatContext';
 import { BsThreeDotsVertical } from "react-icons/bs";
 import ChatArea from './chatArea';
 
 export default function Conversation() {
 
-  const contextAPI = useContext(ChatContext);
-
-  const loadedChat = contextAPI?.loadChat();
-
-  if (!loadedChat) {
-    throw new Error("Chat couldn't load!");
-  }
+  // Static chat data
+  const loadedChat = {
+    chatName: "Alex Morgan",
+    isOnline: true
+  };
 
   return (
     <div className="flex flex-col h-full min-h-0 w-full">
@@ -54,5 +51,5 @@ export default function Conversation() {
       </div>
 
     </div>
-  )
+  );
 }
