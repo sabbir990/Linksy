@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import ChatBar from './chatBar';
-import { ChatContext } from '../Context API/chatContext';
+// import { ChatContext } from '../Context API/chatContext';
 
 export interface ChatBarPropTypes {
     id: string

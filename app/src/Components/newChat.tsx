@@ -7,6 +7,9 @@ import { ImSpinner } from 'react-icons/im';
 import { UserSchemaTypes } from '../Models/Users';
 import { FaChevronRight } from 'react-icons/fa';
 import { BsFillSendPlusFill } from 'react-icons/bs';
+import { getCurrentUser } from '../Utils/getCurrentUser';
+import toast from 'react-hot-toast';
+import { success } from 'zod';
 
 export default function NewChat() {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -50,12 +53,45 @@ export default function NewChat() {
         }
     }
 
-    const sendMessageRequest = async(friendEmail: string) => {
-        try{
+    const sendMessageRequest = async (friendEmail: string) => {
+        try {
 
-            
+            const currentUser = await getCurrentUser();
 
-        }catch(error){
+            const friendRequestRequest = await fetch(`/api/send-friend-request`, {
+                method: "PATCH",
+                headers: {
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify({
+                    requestSender: currentUser?.user.email,
+                    requestReciever: friendEmail,
+                })
+            })
+
+            const friendRequestResponse = await friendRequestRequest.json();
+
+            if (friendRequestResponse?.success) {
+                if (friendRequestResponse?.status === 204) {
+                    toast('Request has already been sent!', {
+                        icon: '⚠️',
+                    });
+
+                    setIsModalOpen(false);
+
+                    return;
+                } else if (friendRequestResponse?.status === 201){
+                    toast.success("Friend request sent!");
+                    setIsModalOpen(false);
+
+                    return;
+                }
+            }
+
+            toast.error("Something went wrong! Try again later!");
+            console.log("Friend request sending issue: ", friendRequestResponse)
+
+        } catch (error) {
             console.error(error)
         }
     }
