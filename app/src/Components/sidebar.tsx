@@ -5,9 +5,10 @@ import Profile from './profiles'
 import SearchBar from './searchBar'
 import ChatList from './chatList'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
+import FriendRequests from './friendRequests'
 
 export default function Sidebar() {
-    
+
     return (
         <div className='px-4 py-3'>
             <div className='flex items-center justify-between pb-3'>
@@ -58,11 +59,11 @@ export default function Sidebar() {
                     </TabList>
 
                     <TabPanel className="pt-4">
-                            <ChatList />
+                        <ChatList />
                     </TabPanel>
 
                     <TabPanel className="">
-                        This is for Tab 2
+                        <FriendRequests />
                     </TabPanel>
                 </Tabs>
             </div>
