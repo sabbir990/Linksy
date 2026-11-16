@@ -1,6 +1,12 @@
 
 import mongoose from "mongoose";
 
+export interface FriendType{
+  friendEmail: string,
+  status: "accepted" | "pending" | "rejected",
+  actionDate: Date,
+}
+
 export interface UserSchemaTypes {
   userId: string;
   avatarImageURL?: string;
@@ -15,7 +21,14 @@ export interface UserSchemaTypes {
   lastLoggedIn: Date;
   registeredDate: Date;
   lastProfileUpdated: Date;
+  friends?: FriendType[]
 }
+
+const friendSchema = new mongoose.Schema<FriendType>({
+  friendEmail: {type: String, trim: true, lowercase: true, unique: true, required: true},
+  status: {type: String, lowercase: true, required: true},
+  actionDate: {type: Date, required: true, default: Date.now}
+})
 
 const userSchema = new mongoose.Schema<UserSchemaTypes>({
   userId: {
@@ -32,6 +45,7 @@ const userSchema = new mongoose.Schema<UserSchemaTypes>({
     required: true,
     trim: true,
     lowercase: true,
+    unique: true,
   },
   email: {
     type: String,
@@ -81,6 +95,10 @@ const userSchema = new mongoose.Schema<UserSchemaTypes>({
     required: true,
     default: Date.now,
   },
+  friends: {
+    type: [friendSchema],
+    default: []
+  } 
 });
 
 const UserModel =
