@@ -5,6 +5,7 @@ import { FriendRequestType } from '../Models/friendRequest';
 import { ImSpinner } from 'react-icons/im';
 import { FaRegUser } from 'react-icons/fa';
 import toast from 'react-hot-toast';
+import { success } from 'zod';
 
 export default function FriendRequests() {
   const [currentUser, setCurrentUser] = useState<any>({});
@@ -66,18 +67,45 @@ export default function FriendRequests() {
 
   const acceptFriendRequest = async(senderEmail: string) => {
     try{
+      const acceptFriendRequestRequest = await fetch(`/api/accept-friend-request`, {
+        method: 'PATCH',
+        headers: {
+          "Content-type" : "application/json"
+        },
+        body: JSON.stringify({
+          friendEmail: senderEmail,
+          selfEmail: currentUser.user.email
+        })
+      })
 
+      const acceptFriendRequestResponse = await acceptFriendRequestRequest.json();
 
+      if(acceptFriendRequestResponse.success){
+        toast.success("Friend request accepted successfully!");
+        fetchFriendRequests(currentUser.user.email);
+        return;
+      }
+
+      console.error("Something went wrong: ", acceptFriendRequestResponse);
+      toast.error("Something went wrong! Please try again later!");
 
     }catch(error){
       console.error(error)
-
     }
   }
 
   const rejectFriendRequest = async(senderEmail: string) => {
     try{
-      const rejectFriendRequestRequest = await fetch(`/api/reject-friend-request?sender=${senderEmail}`, {method: "PATCH"});
+      const rejectFriendRequestRequest = await fetch(`/api/reject-friend-request`, {method: "PATCH", 
+        headers: {
+          "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+          friendEmail: senderEmail,
+          selfEmail: currentUser.user.email
+        })
+      });
+
       const rejectFriendRequestResponse = await rejectFriendRequestRequest.json();
 
       if(rejectFriendRequestResponse?.response?.modifiedCount > 0){

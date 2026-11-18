@@ -7,8 +7,9 @@ import { NextResponse, NextRequest } from "next/server";
 
 export const PATCH = async (req: NextRequest, res: NextResponse) => {
     try {
-        const params = await req.nextUrl.searchParams;
-        const senderEmail = params.get("sender");
+        const body = await req.json();
+        const senderEmail = body.friendEmail;
+        // const selfEmail = body.selfEmail;
 
         if(!senderEmail){
             return NextResponse.json({
@@ -24,7 +25,15 @@ export const PATCH = async (req: NextRequest, res: NextResponse) => {
             }
         })
 
-        // await UserModel.updateOne()
+        // await UserModel.updateOne({email: selfEmail}, {
+        //     $push: {
+        //         friends: {
+        //             friendEmail: senderEmail,
+        //             status: "rejected",
+        //             actionDate: Date.now()
+        //         }
+        //     }
+        // })
 
         return NextResponse.json({
             message: "Friend request rejected successfully!",
