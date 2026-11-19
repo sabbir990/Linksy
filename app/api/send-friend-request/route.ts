@@ -10,7 +10,8 @@ export const PATCH = async (req: NextRequest, res: NextResponse) => {
         const isRequestAlreadyExists = await FriendRequestModel.findOne({
             $and: [
                 { sender: friendRequestObject.requestSender },
-                { reciever: friendRequestObject.requestReciever }
+                { reciever: friendRequestObject.requestReciever },
+                {status: "pending"}
             ]
         })
 

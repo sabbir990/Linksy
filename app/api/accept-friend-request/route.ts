@@ -20,7 +20,15 @@ export const PATCH = async (req: NextRequest, res: NextResponse) => {
 
         // adding Friend to the self account
 
-        const addFriend = await UserModel.updateOne({ email: selfEmail }, {
+        const addFriend = await UserModel.updateOne({
+            email: selfEmail, friends: {
+                $not: {
+                    $elemMatch: {
+                        friendEmail: friendEmail
+                    }
+                }
+            }
+        }, {
             $push: {
                 friends: {
                     friendEmail: friendEmail,
@@ -31,7 +39,15 @@ export const PATCH = async (req: NextRequest, res: NextResponse) => {
         })
 
         // Adding friend to the friend account too
-        await UserModel.updateOne({ email: friendEmail }, {
+        await UserModel.updateOne({
+            email: friendEmail, friends: {
+                $not: {
+                    $elemMatch: {
+                        friendEmail: selfEmail
+                    }
+                }
+            }
+        }, {
             $push: {
                 friends: {
                     friendEmail: selfEmail,
@@ -42,7 +58,7 @@ export const PATCH = async (req: NextRequest, res: NextResponse) => {
         })
 
         // Deleting friend request.
-        await FriendRequestModel.deleteOne({sender: friendEmail, reciever: selfEmail});
+        await FriendRequestModel.deleteOne({ sender: friendEmail, reciever: selfEmail });
 
         return NextResponse.json({
             message: "Friend request is accepted!",
@@ -56,7 +72,7 @@ export const PATCH = async (req: NextRequest, res: NextResponse) => {
         const errorMessage = err instanceof Error ? err.message : String(err);
 
         return NextResponse.json({
-            success: true,
+            success: false,
             message: "Something went wrong!",
             status: 403,
             error: errorMessage

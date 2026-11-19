@@ -30,7 +30,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
         const errorMessage = err instanceof Error ? err.message : String(err);
 
         return NextResponse.json({
-            success: true,
+            success: false,
             message: "Something went wrong!",
             status: 403,
             error: errorMessage

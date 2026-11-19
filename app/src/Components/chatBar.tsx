@@ -1,61 +1,110 @@
+
 import { FaRegUser } from "react-icons/fa";
-import { ChatBarPropTypes } from "./chatList";
-// import { useContext } from "react";
-// import { ChatContext } from "../Context API/chatContext";
+import { FiMessageCircle } from "react-icons/fi";
 
-interface ChatBarProps{
-    chat: ChatBarPropTypes
-}
+export default function ChatBar({ chat, isSelected, isOnline, lastMessage, lastMessageTime }: any) {
 
-export default function ChatBar({ chat }: ChatBarProps) {
-  const {
-    isOnline,
-    chatName,
-    lastMessage,
-    lastMessageTime,
-    isSelected
-  } = chat;
-
-  // const handleChatSelection = () => {
-  //   if(!chat.id){
-  //       throw new Error("Your chat selection request cannot be completed. No chat found for it!");
-  //   }
-
-  //   if(!contextAPI){
-  //       throw new Error("Chat context cannot possibly be null!")
-  //   }
-
-  //   contextAPI.selectChat(chat.id);
-  // }
+  const chatName = chat?.displayName || chat?.username || "Unknown User";
 
   return (
-    <div className={`flex w-full items-center space-x-3 rounded-lg bg-gray-100 p-3 cursor-pointer ${isSelected ? "bg-indigo-200" : ""}`}>
-      {/* Profile icon */}
-      <div className={`relative w-fit shrink-0 rounded-full ${isSelected ? "border-2 border-white" : "border-2 border-gray-300"} p-3`}>
-        <FaRegUser size={18} color={`${isSelected ? "#ffffff": "#a6a4ab"}`} />
+    <div
+      className={`
+        group flex w-full items-center gap-3 rounded-xl p-3
+        cursor-pointer transition-all duration-200
+        border
+        ${
+          isSelected
+            ? "bg-indigo-600 border-indigo-600 shadow-md shadow-indigo-100"
+            : "bg-white border-transparent hover:bg-indigo-50 hover:border-indigo-100"
+        }
+      `}
+    >
+      {/* Profile Avatar */}
+      <div
+        className={`
+          relative flex h-12 w-12 shrink-0 items-center justify-center
+          rounded-full transition-colors
+          ${
+            isSelected
+              ? "bg-indigo-500"
+              : "bg-indigo-100 group-hover:bg-indigo-200"
+          }
+        `}
+      >
+        <FaRegUser
+          size={20}
+          className={isSelected ? "text-white" : "text-indigo-600"}
+        />
 
+        {/* Online Indicator */}
         <div
-          className={`${
-            isOnline ? "block" : "hidden"
-          } absolute bottom-0 right-0 h-[13px] w-[13px] rounded-full border border-gray-100 bg-green-500`}
+          className={`
+            absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full
+            border-2
+            ${
+              isSelected ? "border-indigo-600" : "border-white"
+            }
+            ${isOnline ? "bg-green-500" : "bg-gray-400"}
+          `}
         />
       </div>
 
-      {/* Text content — THIS is where flex-1 belongs */}
+      {/* Chat Information */}
       <div className="flex-1 min-w-0 space-y-1">
+
+        {/* Name and Time */}
         <div className="flex items-center justify-between gap-2">
-          <h4 title={chatName} className="truncate font-semibold">
+          <h4
+            title={chatName}
+            className={`
+              truncate text-sm font-semibold
+              ${isSelected ? "text-white" : "text-gray-800"}
+            `}
+          >
             {chatName}
           </h4>
 
-          <p className="shrink-0 text-sm text-gray-500">
-            {lastMessageTime}
-          </p>
+          <span
+            className={`
+              shrink-0 text-[11px]
+              ${isSelected ? "text-indigo-100" : "text-gray-400"}
+            `}
+          >
+            {lastMessageTime || ""}
+          </span>
         </div>
 
-        <p title={lastMessage} className={`truncate text-sm text-gray-500`}>
-          {lastMessage.length > 30 ? `${lastMessage.slice(0, 30)}...` : lastMessage}
+        {/* Username */}
+        <p
+          className={`
+            truncate text-xs
+            ${isSelected ? "text-indigo-100" : "text-gray-400"}
+          `}
+        >
+          @{chat?.username || "username"}
         </p>
+
+        {/* Last Message */}
+        <div className="flex items-center gap-1.5">
+          <FiMessageCircle
+            size={13}
+            className={isSelected ? "text-indigo-200" : "text-gray-400"}
+          />
+
+          <p
+            title={lastMessage}
+            className={`
+              truncate text-xs
+              ${isSelected ? "text-indigo-100" : "text-gray-500"}
+            `}
+          >
+            {lastMessage
+              ? lastMessage.length > 30
+                ? `${lastMessage.slice(0, 30)}...`
+                : lastMessage
+              : "Start a conversation"}
+          </p>
+        </div>
       </div>
     </div>
   );
