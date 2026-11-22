@@ -1,11 +1,16 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaRegUser } from "react-icons/fa";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import ChatArea from './chatArea';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import {useGetSpecificUserQuery} from "../RTK Query/userAPISlice";
 
 export default function Conversation() {
+  const {data: user, error, isLoading} = useGetSpecificUserQuery(useSelector((state: RootState) => state.chat.selectedChat));
 
+  // console.log(data);
   // Static chat data
   const loadedChat = {
     chatName: "Alex Morgan",
@@ -30,7 +35,7 @@ export default function Conversation() {
         <div className="flex-1 min-w-0 space-y-1 flex items-center justify-between">
           <div>
             <h4 className="truncate font-semibold">
-              {loadedChat.chatName}
+              {user?.friend?.displayName}
             </h4>
 
             <p className={`truncate text-sm ${loadedChat.isOnline ? "text-green-500" : "text-gray-500"}`}>

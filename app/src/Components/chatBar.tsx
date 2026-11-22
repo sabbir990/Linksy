@@ -1,21 +1,27 @@
 
 import { FaRegUser } from "react-icons/fa";
 import { FiMessageCircle } from "react-icons/fi";
+import { UserSchemaTypes } from "../Models/Users";
+import { useDispatch, useSelector } from "react-redux";
+import { selectChat } from "../redux/chatSlice";
 
 export default function ChatBar({ chat, isSelected, isOnline, lastMessage, lastMessageTime }: any) {
 
   const chatName = chat?.displayName || chat?.username || "Unknown User";
+  const dispatch = useDispatch();
 
   return (
     <div
+      onClick={() => {
+        dispatch(selectChat(chat.email));
+      }}
       className={`
         group flex w-full items-center gap-3 rounded-xl p-3
         cursor-pointer transition-all duration-200
         border
-        ${
-          isSelected
-            ? "bg-indigo-600 border-indigo-600 shadow-md shadow-indigo-100"
-            : "bg-white border-transparent hover:bg-indigo-50 hover:border-indigo-100"
+        ${isSelected
+          ? "bg-indigo-600 border-indigo-600 shadow-md shadow-indigo-100"
+          : "bg-white border-transparent hover:bg-indigo-50 hover:border-indigo-100"
         }
       `}
     >
@@ -24,10 +30,9 @@ export default function ChatBar({ chat, isSelected, isOnline, lastMessage, lastM
         className={`
           relative flex h-12 w-12 shrink-0 items-center justify-center
           rounded-full transition-colors
-          ${
-            isSelected
-              ? "bg-indigo-500"
-              : "bg-indigo-100 group-hover:bg-indigo-200"
+          ${isSelected
+            ? "bg-indigo-500"
+            : "bg-indigo-100 group-hover:bg-indigo-200"
           }
         `}
       >
@@ -41,8 +46,7 @@ export default function ChatBar({ chat, isSelected, isOnline, lastMessage, lastM
           className={`
             absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full
             border-2
-            ${
-              isSelected ? "border-indigo-600" : "border-white"
+            ${isSelected ? "border-indigo-600" : "border-white"
             }
             ${isOnline ? "bg-green-500" : "bg-gray-400"}
           `}

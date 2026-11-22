@@ -1,12 +1,10 @@
 import Sidebar from '../Components/sidebar'
 import NoChatChoosen from '../Components/noChatChoosen';
-import { useContext, useState } from 'react';
-// import { ChatContext } from '../Context API/chatContext';
 import Conversation from '../Components/conversation';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
 export default function Chats() {
-
-  const [isChatSeleted, setIsChatSelected] = useState<boolean>(false);
 
   return (
     <div className="flex h-screen w-full overflow-hidden">
@@ -18,7 +16,9 @@ export default function Chats() {
 
       {/* Conversation */}
       <div className="flex-3 min-w-0 min-h-0">
-        {isChatSeleted
+        {useSelector(
+          (state: RootState) => state.chat.selectedChat
+        )
           ? <Conversation />
           : <NoChatChoosen />
         }

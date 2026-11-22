@@ -1,13 +1,9 @@
-// import { createContext } from 'react'
-// import { ChatBarPropTypes } from '../Components/chatList';
-// import { UserSchemaTypes } from '../Models/Users';
+import { createContext } from 'react'
+import { UserSchemaTypes } from '../Models/Users';
 
-// export interface ChatContextType {
-//     currentlySelectedChat: ChatBarPropTypes | null;
-//     chatData: ChatBarPropTypes[];
-//     selectChat: (chatId: string) => void;
-//     loadChat: () => ChatBarPropTypes;
-//     isChatChoosen: boolean;
-// }
+export interface ChatContextType {
+    isChatSelected: boolean,
+    setIsChatSelected: (chatInfo: any) => void,
+}
 
-// export const ChatContext = createContext<ChatContextType | null>(null);
+export const ChatContext = createContext<ChatContextType | null>(null);
