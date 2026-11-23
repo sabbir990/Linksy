@@ -9,9 +9,13 @@ import { cookies } from "next/headers";
 
 export const PATCH = async (req: NextRequest, res: NextResponse) => {
     try {
+
+        await main();
         
         const { email, password } = await req.json();
+        console.log("It's here")
         const userExists = await UserModel.findOne({ email });
+
 
         if (userExists) {
             const compairPassword = await bcrypt.compare(password, userExists.password);

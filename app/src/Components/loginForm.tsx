@@ -59,6 +59,7 @@ export default function LoginForm() {
 
             toast.error("Something went wrong! Please try again later!");
 
+            // console.log(loginResponse)
             console.error("Login error:", loginResponse.errorMessage);
 
         } catch (error) {
