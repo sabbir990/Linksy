@@ -1,34 +1,67 @@
 "use client"
 
 import React, { useEffect } from 'react'
-import {socket} from "../socket/socket";
+import { socket } from "../socket/socket";
 
 export default function TestSocket() {
 
     useEffect(() => {
-        socket.on("connect", () => {
-            console.log("User connected: ", socket.id)
-        })
 
-        socket.on("welcome", (data) => {
-            console.log(data.message)
-        })
+        let cancelled = false;
 
-        socket.on("connect_error", (error) => {
-            console.error(error.message)
-        })
+        const connectSocket = async () => {
+            try {
+                const tokenRequest = await fetch('/api/socket-token', { method: "POST" });
+                const tokenResponse = await tokenRequest.json();
 
-        socket.connect();
+                // console.log(tokenResponse)
+
+                if(!tokenRequest.ok){
+                    throw new Error(tokenResponse.message);
+                }
+
+                if(cancelled) return;
+
+                socket.auth = {
+                    token: tokenResponse.token
+                }
+
+                socket.connect();
+            } catch (error) {
+                console.error("Socket connection setup failed: ", error);
+            }
+        }
+
+        const handleConnect = () => {
+            console.log("Connected to Socket server. ", socket.id);
+        }
+
+        const handleConnectError = (error: Error) => {
+            console.log("Something went wrong while connecting to socket. ", error)
+        }
+
+        const handleDisconnection = (reason: string) => {
+            console.log("Connection ruined. ", reason);
+        }
+
+        socket.on("connect", handleConnect);
+        socket.on("connect_error", handleConnectError);
+        socket.on("disconnect", handleDisconnection);
+
+        connectSocket();
 
         return () => {
+
+            cancelled = true;
+
             socket.off("connect");
             socket.off("welcome");
             socket.off("connect_error");
             socket.disconnect();
         }
     }, [])
-    
-  return (
-    <div>Testing the socket connection</div>
-  )
+
+    return (
+        <div>Testing the socket connection</div>
+    )
 }

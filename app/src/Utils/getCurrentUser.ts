@@ -12,6 +12,6 @@ export const getCurrentUser = async () => {
 
         throw new Error("User isn't logged in! Nothing's accessible for now!")
     } catch (error) {
-        console.error(error)
+        return console.error(error)
     }
 }

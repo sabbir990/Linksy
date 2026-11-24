@@ -23,7 +23,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
             })
         )
 
-        console.log("All Friends: ", allFriendsInDetails);
+        // console.log("All Friends: ", allFriendsInDetails);
 
         return NextResponse.json({
             message: "Successfully fetched all the friends.",
