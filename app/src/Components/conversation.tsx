@@ -44,10 +44,27 @@ export default function Conversation() {
 
     };
 
+    const handleOfflineStatus = (statusObject: { userId: string, status: "online" | "offline", disconnection_reason: string }) => {
+
+      if (statusObject.userId === user?.friend?.userId) {
+        if (statusObject.status === "offline") {
+          setIsOnline(false);
+        }
+      }
+    }
+
+    const handleSelfDisconnection = (reason: string) => {
+      console.log("The reason of self disconnection: ", handleSelfDisconnection)
+    }
+
     socket.on("user-online", handleOnlineStatus);
+    socket.on("user-offline", handleOfflineStatus);
+    socket.on("disconnect", handleSelfDisconnection);
 
     return () => {
-      socket.off("user-online", handleOnlineStatus);
+      socket.on("user-online", handleOnlineStatus);
+      socket.on("user-offline", handleOfflineStatus);
+      socket.on("disconnect", handleSelfDisconnection);
     };
 
   }, [user?.friend?.userId]);

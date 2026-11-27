@@ -4,11 +4,36 @@ import { FiMessageCircle } from "react-icons/fi";
 import { UserSchemaTypes } from "../Models/Users";
 import { useDispatch, useSelector } from "react-redux";
 import { selectChat } from "../redux/chatSlice";
+import { useEffect, useState } from "react";
+import {socket} from '../socket/socket';
 
-export default function ChatBar({ chat, isSelected, isOnline, lastMessage, lastMessageTime }: any) {
+interface UserOnlineResponseType{
+  userId: string,
+  status: "online" | "offline"
+}
+
+export default function ChatBar({ chat, isSelected, lastMessage, lastMessageTime }: any) {
 
   const chatName = chat?.displayName || chat?.username || "Unknown User";
   const dispatch = useDispatch();
+  const [isOnline, setIsOnline] = useState(false);
+
+    useEffect(() => {
+      const handleUserOnline = (data: UserOnlineResponseType) => {
+        if(chat.userId === data?.userId){
+          if(data?.status === "online"){
+            setIsOnline(true);
+          }
+
+          else {
+            setIsOnline(false);
+          }
+        }
+      }
+
+      socket.on("user-online", handleUserOnline)
+
+  }, [])
 
   return (
     <div
